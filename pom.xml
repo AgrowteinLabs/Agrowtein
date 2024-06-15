@@ -15,6 +15,7 @@
 	<description>Agrowtein meter reader backend</description>
 	<properties>
 		<java.version>21</java.version>
+		<embed.mongo.version>1.35</embed.mongo.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -38,6 +39,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<version>${embed.mongo.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
