@@ -1,0 +1,22 @@
+{
+  "name": "agrometer",
+  "version": "1.0.0",
+  "description": "Agrometer backend",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgrowteinLabs/AgroMeter.git"
+  },
+  "author": "Agrowtein Labs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AgrowteinLabs/AgroMeter/issues"
+  },
+  "homepage": "https://github.com/AgrowteinLabs/AgroMeter#readme"
+}
