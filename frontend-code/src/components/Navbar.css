@@ -1,0 +1,167 @@
+.navbar-custom {
+  transition: background-color 0.3s ease-in-out;
+  padding-top: 0.5rem !important; /* Reduced padding */
+  padding-bottom: 0.5rem !important; /* Reduced padding */
+}
+
+.navbar-custom.transparent {
+  background-color: white;
+}
+
+.navbar-custom.scrolled {
+  background-color: white;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+  color: green;
+  padding-top: 0.60rem; /* Reduced padding */
+  padding-bottom: 0.60rem; /* Reduced padding */
+}
+
+.navbar-custom .navbar-nav .nav-link:hover {
+  color: darkgreen; /* Optional: A darker green on hover */
+}
+
+.navbar-custom .btn {
+  padding-top: 0.80rem; /* Reduced padding */
+  padding-bottom: 0.80rem; /* Reduced padding */
+}
+
+.no-underline {
+  text-decoration: none !important;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}
+
+.back-to-top.show {
+  display: block;
+}
+
+  
+
+  ---------------------
+  .container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: green;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .services {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .service-card {
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+  }
+  
+  .icon {
+    height: 50px;
+    margin-bottom: 10px;
+  }
+  
+  .contact {
+    background-color: #4caf50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .contact h2 {
+    margin-top: 10px;
+  }
+  
+  
+  .carousel-caption.overlay {
+    background: rgba(0, 128, 0, 0.6); /* Adjust the overlay color and opacity here */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+  }
+  
+  .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
+  
+  .owl-nav button {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .owl-nav button:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .owl-nav .owl-prev {
+    position: absolute;
+    left: 0;
+  }
+  
+  .owl-nav .owl-next {
+    position: absolute;
+    right: 0;
+  }
+  
+-----------------------------------------
+
+.countdown {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.countdown span {
+  margin: 0 10px;
+}
+
+
+
+------------------------------
+
+
+.container {
+  max-width: 500px;
+  padding: 20px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form .btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+form .btn:hover {
+  background-color: #218838;
+}
