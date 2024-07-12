@@ -13,10 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(errorHandler);
 
+const UserRoutes = require("./routes/UserRoutes");
 
 app.get("/", (req, res) => {
   res.json({ message: "Agrometer Backend" });
 });
+app.use("/user", UserRoutes);
 
 app
   .listen(port, () => {
