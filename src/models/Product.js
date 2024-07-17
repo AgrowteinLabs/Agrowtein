@@ -10,37 +10,37 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    user_id: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    status: {
+    state: {
       type: String,
-      enum: ["on", "off"],
-      default: undefined,
+      enum: ["ON", "OFF", "ERROR"],
+      default: "OFF",
     },
     location: {
       type: String,
     },
-    product_type: {
+    productType: {
       type: String,
     },
-    model_number: {
+    modelNumber: {
       type: String,
     },
-    serial_number: {
+    serialNumber: {
       type: String,
     },
-    compatible_sensors: [
+    compatibleSensors: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Sensor",
       },
     ],
-    usage_metrics: {
+    usageMetrics: {
       type: String,
     },
-    installation_date: {
+    installationDate: {
       type: Date,
       default: Date.now(),
     },

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const SensorDataSchema = new mongoose.Schema(
   {
-    product_id: {
+    productId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
@@ -15,12 +15,15 @@ const SensorDataSchema = new mongoose.Schema(
     },
     weather: {
       temperature: {
-        type: String,
+        type: Long,
       },
-      humidity: {
+      voltage: {
         type: String,
       },
       pressure: {
+        type: String,
+      },
+      waterlevel: {
         type: String,
       },
       windspeed: {

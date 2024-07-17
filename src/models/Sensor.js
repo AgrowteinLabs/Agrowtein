@@ -17,8 +17,8 @@ const SensorSchema = new mongoose.Schema(
     status:
     {
       type: String,
-      enum: ["on", "off"],
-      default: undefined,
+      enum: ["ON", "OFF" , "ERROR"],
+      default: "OFF",
     },
   },
   {

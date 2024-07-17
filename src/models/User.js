@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
-    fullname: {
+    fullName: {
       type: String,
       required: true,
     },
@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    phone_number: {
+    phoneNumber: {
       type: String,
     },
     address: {
@@ -32,31 +32,19 @@ const UserSchema = new mongoose.Schema(
         type: String,
       },
     },
-    day_of_registration: {
+    dayOfRegistration: {
       type: Date,
       default: Date.now(),
     },
-    product: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-      },
-    ],
-    sensors: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Sensor",
-      },
-    ],
     role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
     },
-    terms_agreement: {
+    termsAgreement: {
       type: Boolean,
     },
-    privacy_policy_agreement: {
+    privacyPolicyAgreement: {
       type: Boolean,
     },
   },
