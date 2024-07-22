@@ -13,6 +13,7 @@ const ProductSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     state: {
       type: String,
@@ -30,6 +31,7 @@ const ProductSchema = new mongoose.Schema(
     },
     serialNumber: {
       type: String,
+      required: true,
     },
     compatibleSensors: [
       {
