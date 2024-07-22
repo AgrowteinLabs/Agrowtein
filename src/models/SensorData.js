@@ -16,7 +16,8 @@ const SensorDataSchema = new mongoose.Schema(
     },
     weather: {
       temperature: {
-        type: Long,
+        //type Long not supported
+        type: String,
       },
       voltage: {
         type: String,
