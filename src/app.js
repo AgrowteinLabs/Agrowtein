@@ -3,14 +3,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
-const { logger } = require("./middleware/logger");
+const { logger , logEvents} = require("./middleware/logger");
 const { errorHandler } = require("./middleware/errorHandler");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const port = process.env.PORT || 4500;
 
 connectDB();
-app.use(logger());
+app.use(logger);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,7 +37,11 @@ mongoose.connection.once("open", () => {
     });
 });
 mongoose.connection.on("error", (err) => {
-  console.error("Error connecting to database", err);
+  console.log(err);
+  logEvents(
+    `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`,
+    "mongoErrLog.log"
+  );
 });
 
 module.exports = app;
