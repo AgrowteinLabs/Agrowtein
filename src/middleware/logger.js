@@ -1,23 +1,29 @@
-const morgan = require("morgan");
+const { format } = require("date-fns/format");
+const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const path = require("path");
+const fsPromises = require("fs").promises;
 
-const logger = (req, res) => {
+const logEvents = async (message, logFileName) => {
+  const dateTime = `${format(new Date(), "yyyyMMdd\tHH:mm:ss")}`;
+  const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
   try {
-    const logDir = path.join(__dirname, "..", "logs");
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir, { recursive: true });
+    if (!fs.existsSync(path.join(__dirname, "..", "logs"))) {
+      await fsPromises.mkdir(path.join(__dirname, "..", "logs"));
     }
-    console.log(logDir)
-
-    const logFilePath = path.join(logDir, "access.log");
-    const accessLogStream = fs.createWriteStream(logFilePath, { flags: "a" });
-    const logFormat =
-      `Date: :date[iso]\t:method\t:req[header="origin"]\t:url\tStatus: :status\t:response-time ms`;
-    return morgan(logFormat, { stream: accessLogStream });
+    await fsPromises.appendFile(
+      path.join(__dirname, "..", "logs", logFileName),
+      logItem
+    );
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 
-module.exports = { logger };
+const logger = (req, res, next) => {
+  logEvents(`${req.method}\t${req.headers.origin}\t${req.url}`, "reqLog.log");
+  console.log(`${req.method} ${req.path}`);
+  next()
+};
+
+module.exports = { logEvents, logger };
