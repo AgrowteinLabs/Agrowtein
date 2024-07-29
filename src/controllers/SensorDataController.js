@@ -41,7 +41,6 @@ const createData = async (req, res) => {
   }
 };
 
-//Do we need to update data?
 module.exports = {
   getDataByProduct,
   getDataByDate,

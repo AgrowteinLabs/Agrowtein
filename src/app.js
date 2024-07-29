@@ -20,11 +20,13 @@ const UserRoutes = require("./routes/UserRoutes");
 const ProductRoutes = require("./routes/ProductRoutes");
 const SensorRoutes = require("./routes/SensorRoutes");
 const SensorDataRoutes = require("./routes/SensorDataRoutes");
+const MockDataRoutes = require("./routes/MockDataRoute");
 
 app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/sensors", SensorRoutes);
 app.use("/api/v1/data", SensorDataRoutes);
+app.use("/api/v1/mockdata", MockDataRoutes);
 
 mongoose.connection.once("open", () => {
   console.log("Database connected successfully.");
