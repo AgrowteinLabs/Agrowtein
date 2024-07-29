@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProductSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -33,7 +33,8 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    compatibleSensors: [
+    sensor: 
+    [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Sensor",
@@ -52,5 +53,5 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
-const Product = mongoose.model("Product", ProductSchema);
+const Product = mongoose.model("Product", productSchema);
 module.exports = Product;
