@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
       country: {
         type: String,
       },
-      postal_code: {
+      postalCode: {
         type: String,
       },
     },

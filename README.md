@@ -43,7 +43,7 @@ For example the createUser endpoint will return a json like :
         - `city` (string): The city of the user's address.
         - `state` (string): The state of the user's address.
         - `country` (string): The country of the user's address.
-        - `postal_code` (string): The postal code of the user's address.
+        - `postalCode` (string): The postal code of the user's address.
     - `dayOfRegistration` (date, default: current date): The date of user registration.
     - `role` (string, enum: ["user", "admin"], default: "user"): The role of the user.
     - `termsAgreement` (boolean): Indicates if the user has agreed to the terms.
@@ -61,7 +61,7 @@ For example the createUser endpoint will return a json like :
         - `city` (string): The city of the user's address.
         - `state` (string): The state of the user's address.
         - `country` (string): The country of the user's address.
-        - `postal_code` (string): The postal code of the user's address.
+        - `postalCode` (string): The postal code of the user's address.
     - `dayOfRegistration` (date, default: current date): The date of user registration.
     - `role` (string, enum: ["user", "admin"], default: "user"): The role of the user.
     - `termsAgreement` (boolean): Indicates if the user has agreed to the terms.
