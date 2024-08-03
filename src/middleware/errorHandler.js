@@ -5,7 +5,9 @@ const errorHandler = (err, req, res, next) => {
   try {
     const logFilePath = path.join(__dirname, "..", "logs", "error.log");
     const errorLogStream = fs.createWriteStream(logFilePath, { flags: "a" });
-    const errorMessage = `Date: ${new Date().toISOString()}\t${req.method}\t${req.headers.origin}\t${req.url}\tError: ${err.message}\n`;
+    errorMessage = `Date: ${new Date().toISOString()}\t${req.method}\t${
+      req.headers.origin
+    }\t${req.url}\tError: ${err.message}\n`;
     errorLogStream.write(errorMessage);
     res.status(500).send("Internal Server Error");
   } catch (err) {
@@ -13,4 +15,14 @@ const errorHandler = (err, req, res, next) => {
   }
 };
 
-module.exports = { errorHandler };
+const logError = (err) => {
+  const errorMessage = `Date: ${new Date().toISOString()}\tError: ${
+    err.message
+  }\n`;
+  const logFilePath = path.join(__dirname, "..", "logs", "error.log");
+  fs.appendFile(logFilePath, errorMessage, (error) => {
+    if (error) console.error("Failed to write to log file:", error);
+  });
+};
+
+module.exports = { errorHandler , logError };

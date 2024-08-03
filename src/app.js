@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logger");
-const { errorHandler } = require("./middleware/errorHandler");
+const { errorHandler, logError } = require("./middleware/errorHandler");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
 const port = process.env.PORT || 4500;
@@ -36,10 +36,12 @@ mongoose.connection.once("open", () => {
     })
     .on("error", (err) => {
       console.error("Error starting server:", err);
+      logError(err);
     });
 });
 mongoose.connection.on("error", (err) => {
   console.error("Error connecting to database", err);
+  logError(err);
 });
 
 module.exports = app;
