@@ -14,6 +14,17 @@ const AddMockData = async (req, res) => {
   }
 };
 
+const getMockData = async (req,res)=>{
+  try {
+    const data = await MockData.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(404).json({ message: "Error fetching Data." });
+  }
+}
+
 module.exports = {
   AddMockData,
+  getMockData
 };
