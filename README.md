@@ -68,7 +68,7 @@ For example the createUser endpoint will return a json like :
     - `privacyPolicyAgreement` (boolean): Indicates if the user has agreed to the privacy policy.
 - Parameters: `userId` (string)
 
-- Note: The password cannot be updated through this endpoint. Use the `/api/v1/users/:
+- Note: The password cannot be updated through this endpoint. Use the `/api/v1/users/:userId/newpassword:
 
 ### Update User Password
 
@@ -78,8 +78,6 @@ For example the createUser endpoint will return a json like :
 - Request Body:
     - `password` (string, required): The new password of the user.
 - Parameters: `userId` (string)
-
-- Note: The password will be hashed before updating in the database.
 
 ### Delete User
 
