@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
       req.headers.origin
     }\t${req.url}\tError: ${err.message}\n`;
     errorLogStream.write(errorMessage);
+    console.log(errorMessage)
     res.status(500).send("Internal Server Error");
   } catch (err) {
     console.error(err);
