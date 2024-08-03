@@ -3,8 +3,8 @@
 This documentation provides an overview of the Agrowtein API endpoints, their URLs, supported operations, and the expected request bodies referencing the corresponding database models.
 
 ## Base URL
-The base URL for the API is: https://agrowteinlabs.onrender.com
-All requests (excluding some GET requests) will return a json with a message field.
+- The base URL for the API is: https://agrowteinlabs.onrender.com
+- All requests (excluding some GET requests) will return a json with a message field.
 For example the createUser endpoint will return a json like : 
     res.status(201).json({ message: "User created successfully." });
     OR
