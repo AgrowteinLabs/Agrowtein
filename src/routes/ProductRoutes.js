@@ -12,8 +12,8 @@ const {
 
 router.get("/", getProducts);
 router.get("/:productId", getProductById);
-router.get("/:serialNumber", getProductBySerial);
-router.get("/:userId", getProductsByUser);
+router.get("/serial/:serialNumber", getProductBySerial);
+router.get("/user/:userId", getProductsByUser);
 router.post("/", createProduct);
 router.put("/:productId", updateProduct);
 router.delete("/:productId", deleteProduct);

@@ -18,7 +18,7 @@ const getDataByProduct = async (req, res) => {
 const getDataByDate = async (req, res) => {
   try {
     const data = await SensorData.find({
-      timestamp: { $gte: req.body.startDate, $lt: req.body.endDate },
+      timestamp: { $gte: req.body.startDate, $lte: req.body.endDate },
       productId: req.params.productId,
     }).exec();
     if (!data) {

@@ -33,11 +33,17 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    sensor: 
-    [
+    sensor: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Sensor",
+        _id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Sensor",
+        },
+        state: {
+          type: String,
+          enum: ["ON", "OFF", "ERROR"],
+          default: "OFF",
+        },
       },
     ],
     usageMetrics: {
