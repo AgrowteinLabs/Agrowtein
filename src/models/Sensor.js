@@ -19,7 +19,7 @@ const SensorSchema = new mongoose.Schema(
       type: String,
       enum: ["ON", "OFF" , "ERROR"],
       default: "OFF",
-    },
+    }
   },
   {
     timestamps: true,

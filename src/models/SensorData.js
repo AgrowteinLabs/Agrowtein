@@ -20,6 +20,9 @@ const sensorDataSchema = new mongoose.Schema(
     humidity: {
       type: Number,
     },
+    oxygen:{
+      type: String,
+    },
     voltage: {
       type: String,
     },
