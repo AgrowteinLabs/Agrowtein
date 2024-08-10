@@ -2,7 +2,7 @@ require("dotenv").config({ path: "src/config/.env" });
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const corsOptions = require("./config/corsOptions");
+// const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logger");
 const { errorHandler, logError } = require("./middleware/errorHandler");
 const mongoose = require("mongoose");
@@ -11,7 +11,7 @@ const port = process.env.PORT || 4500;
 
 connectDB();
 app.use(logger());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(errorHandler);
