@@ -36,4 +36,5 @@ const getCommand = async (req, res) => {
 module.exports = {
   AddMockData,
   getMockData,
+  getCommand
 };
