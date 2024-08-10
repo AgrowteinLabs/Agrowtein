@@ -26,7 +26,7 @@ app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/sensors", SensorRoutes);
 app.use("/api/v1/data", SensorDataRoutes);
-app.use("/api/v1/mockdata", MockDataRoutes);
+app.use("/api/v1/heatingcoil", MockDataRoutes);
 
 mongoose.connection.once("open", () => {
   console.log("Database connected successfully.");
