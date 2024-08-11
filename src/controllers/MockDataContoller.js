@@ -26,7 +26,7 @@ const getMockData = async (req, res) => {
 
 const getCommand = async (req, res) => {
   try {
-    res.status(200).json({ message: "on" });
+    res.status(200).json({ message: "off" });
   } catch (error) {
     console.error(error);
     res.status(404).json({ message: "Error fetching Data." });
@@ -36,5 +36,5 @@ const getCommand = async (req, res) => {
 module.exports = {
   AddMockData,
   getMockData,
-  getCommand
+  getCommand,
 };
