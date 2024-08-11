@@ -26,11 +26,7 @@ const getMockData = async (req, res) => {
 
 const getCommand = async (req, res) => {
   try {
-    const message = "on";
-    setTimeout(() => {
-      message = "off";
-    }, 10000);
-    res.status(200).json({ message: message });
+    res.status(200).json({ message: "on" });
   } catch (error) {
     console.error(error);
     res.status(404).json({ message: "Error fetching Data." });
