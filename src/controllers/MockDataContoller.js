@@ -26,7 +26,7 @@ const getMockData = async (req, res) => {
 
 const getCommand = async (req, res) => {
   try {
-    let message = "on";
+    const message = "on";
     setTimeout(() => {
       message = "off";
     }, 10000);
