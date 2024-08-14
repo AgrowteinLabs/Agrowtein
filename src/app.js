@@ -7,6 +7,9 @@ const { logger } = require("./middleware/logger");
 const { errorHandler, logError } = require("./middleware/errorHandler");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const options = require("./config/swaggerOptions");
 const port = process.env.PORT || 4500;
 
 connectDB();
@@ -26,7 +29,10 @@ app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/sensors", SensorRoutes);
 app.use("/api/v1/data", SensorDataRoutes);
-app.use("/api/v1/heatingcoil", MockDataRoutes);
+app.use("/api/v1/mockdata", MockDataRoutes);
+
+const specs = swaggerJsdoc(options);
+app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));
 
 mongoose.connection.once("open", () => {
   console.log("Database connected successfully.");
