@@ -2,12 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/AgrowteinLabs/Agrowtein.git'
-            }
-        }
-
+    
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
