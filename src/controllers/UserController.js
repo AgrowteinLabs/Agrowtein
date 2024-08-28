@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find().exec();
+    const users = await User.find().select("-password").exec();
     if (!users) {
       res.status(404).json({ message: "No users found." });
     } else {
@@ -16,7 +16,7 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId).exec();
+    const user = await User.findById(req.params.userId).select('-password').exec();
     if (!user) {
       res.status(404).json({ message: "User not found." });
     } else {
@@ -48,7 +48,7 @@ const userNewPassword = async (req, res) => {
   try {
     const password = req.body.password;
     const hashpassword = await bcrypt.hash(password, 10);
-    await User.findByIdAndUpdate(req.params.user_id, {
+    await User.findByIdAndUpdate(req.params.userId, {
       password: hashpassword,
     });
     res.status(201).json({ message: "Password changed successfully." });
@@ -59,7 +59,7 @@ const userNewPassword = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findByIdAndUpdate(req.params.user_id, req.body);
+    const user = await User.findByIdAndUpdate(req.params.userId, req.body);
     if (!user) {
       res.status(404).json({ message: "User not found." });
     } else {

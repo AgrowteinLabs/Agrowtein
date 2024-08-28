@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { AddMockData } = require("../controllers/MockDataContoller");
+const {
+  AddMockData,
+  getMockData,
+  getCommand,
+} = require("../controllers/MockDataContoller");
 
-router.post("/",AddMockData);
+router.get("/", getMockData);
+router.post("/", AddMockData);
+router.get("/command", getCommand);
 
 module.exports = router;
