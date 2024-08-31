@@ -2,3 +2,5 @@
 node_modules
 access.log
 error.log
+/dist
+/.idea
