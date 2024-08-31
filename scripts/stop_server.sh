@@ -2,6 +2,8 @@
 
 # Find the process running on the port  and kill it
 # Adjust the port to the one your app runs on
+git clone https://github.com/your-username/your-repo.git /var/www/html
+
 PID=$(lsof -ti:4500)
 if [ -n "$PID" ]; then
   kill -9 $PID
