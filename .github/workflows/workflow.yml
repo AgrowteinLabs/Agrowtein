@@ -5,7 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  continuous-integration:
     runs-on: ubuntu-latest
     steps:
       # Step 1: Checkout the repository
@@ -35,7 +35,7 @@ jobs:
             MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: npm run build
 
-  deploy:
+  continuous-deployment:
     runs-on: ubuntu-latest
     needs: [continuous-integration]
     if: github.ref == 'refs/heads/main'
@@ -46,7 +46,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
+          aws-region: ap-southeast-1
 
       # Step 2: Create CodeDeploy Deployment
       - name: Create CodeDeploy Deployment
