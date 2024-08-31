@@ -53,6 +53,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifacts
+          path: ./
 
       # Step 2: Configure AWS credentials
       - name: Configure AWS credentials
