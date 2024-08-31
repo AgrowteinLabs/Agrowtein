@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /home/ubuntu/Agrowtein
-npm install  # Install dependencies
+sudo -u ubuntu npm install  # Install dependencies
