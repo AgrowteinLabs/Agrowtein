@@ -35,12 +35,26 @@ jobs:
             MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: npm run build
 
+        # Step 6: Upload build artifacts
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist/**
+
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
     if: github.ref == 'refs/heads/main'
     steps:
-      # Step 1: Configure AWS credentials
+      # Step 1: Download build artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifacts
+
+      # Step 2: Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -48,7 +62,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      # Step 2: Create CodeDeploy Deployment
+      # Step 3: Create CodeDeploy Deployment
       - name: Deploy to EC2 with CodeDeploy
         run: |
           aws deploy create-deployment \
