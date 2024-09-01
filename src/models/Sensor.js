@@ -1,30 +1,14 @@
 const mongoose = require("mongoose");
 
-const SensorSchema = new mongoose.Schema(
+const sensorSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    unit: {
-      type: String,
-      required: true,
-    },
-    state:
-    {
-      type: String,
-      enum: ["ON", "OFF" , "ERROR"],
-      default: "OFF",
-    }
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    unit: { type: String, required: true },
+    errorCode: { type: String, required: true },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-const Sensor = mongoose.model("Sensor", SensorSchema);
+const Sensor = mongoose.model("Sensor", sensorSchema);
 module.exports = Sensor;
