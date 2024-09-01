@@ -31,5 +31,5 @@ const userProductSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const UserProduct = mongoose.model("UserProduct", userProductSchema);
+const UserProduct = mongoose.model("UsersProduct", userProductSchema);
 module.exports = UserProduct;

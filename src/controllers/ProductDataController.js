@@ -1,5 +1,5 @@
 const ProductData = require("../models/ProductData");
-const UserProduct = require("../models/userProduct");
+
 
 const getDataByUid = async (req, res) => {
   try {

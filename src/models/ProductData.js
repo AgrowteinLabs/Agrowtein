@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const UserProduct = require("./userProduct");
 
 const productDataSchema = new mongoose.Schema(
   {
@@ -15,7 +14,7 @@ const productDataSchema = new mongoose.Schema(
 
 productDataSchema.pre("save", async function (next) {
   try {
-    const userProduct = await UserProduct.findOne({ uid: this.uid })
+    const userProduct = await mongoose.model("UserProduct").findOne({ uid: this.uid })
       .populate("sensors.sensorId")
       .exec();
 
