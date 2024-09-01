@@ -1,5 +1,5 @@
 const Sensor = require("../models/Sensor");
-const UserProduct = require("../models/userProduct");
+const UserProduct = require("../models/UserProduct");
 
 const getUserProducts = async (req, res) => {
   try {
