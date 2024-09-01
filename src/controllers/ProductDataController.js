@@ -37,7 +37,7 @@ const createData = async (req, res) => {
       return res.status(404).json({ message: "UserProduct not found." });
     }
     const newData = new ProductData({
-      ...req.body,
+      data:req.body,
       uid: req.params.uid,
     });
     await newData.save();
