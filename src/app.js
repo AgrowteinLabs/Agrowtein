@@ -24,12 +24,14 @@ const ProductRoutes = require("./routes/ProductRoutes");
 const SensorRoutes = require("./routes/SensorRoutes");
 const ProductDataRoutes = require("./routes/ProductDataRoutes");
 const UserProductRoutes = require("./routes/UserProductRoutes");
+const CommandRoutes = require("./routes/CommandRoutes");
 
 app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/sensors", SensorRoutes);
 app.use("/api/v1/user/product", UserProductRoutes);
 app.use("/api/v1/data", ProductDataRoutes);
+app.use("/api/v1/command", CommandRoutes);
 
 const specs = swaggerJsdoc(options);
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));
