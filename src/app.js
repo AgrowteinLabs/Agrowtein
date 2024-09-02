@@ -32,7 +32,7 @@ const UserProductRoutes = require("./routes/UserProductRoutes");
 const CommandRoutes = require("./routes/CommandRoutes");
 
 app.use("/api/v1/auth", AuthRoutes);
-app.use("/api/v1/users", verifyJWT, UserRoutes);
+app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/sensors", SensorRoutes);
 app.use("/api/v1/user/product", UserProductRoutes);

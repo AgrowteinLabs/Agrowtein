@@ -20,7 +20,7 @@ const Login = async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "10m",
+        expiresIn: "60m",
       }
     );
     const refreshToken = jwt.sign(
@@ -29,7 +29,7 @@ const Login = async (req, res) => {
       },
       process.env.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "60m",
+        expiresIn: "120m",
       }
     );
     res
@@ -58,12 +58,13 @@ const Login = async (req, res) => {
 
 const Refresh = async (req, res) => {
   try {
-    const authHeader = req.headers.authorization || req.headers.Authorization;
+    /*const authHeader = req.headers.authorization || req.headers.Authorization;
     if (!authHeader?.startsWith("Bearer ")) {
       console.log("User request invalid");
       return res.status(401).json({ message: "Unauthorized" });
     }
-    const refreshToken = authHeader.split(" ")[1];
+    const refreshToken = authHeader.split(" ")[1];*/
+    const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.status(401).json({ message: "Unauthorized" });
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     const user = await User.findOne({ _id: decoded.userId });
@@ -75,7 +76,7 @@ const Refresh = async (req, res) => {
       },
       process.env.ACCESS_TOKEN_SECRET,
       {
-        expiresIn: "10m",
+        expiresIn: "60m",
       }
     );
     res.cookie("accessToken", accessToken, {
