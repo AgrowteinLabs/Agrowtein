@@ -17,7 +17,7 @@ const port = process.env.PORT || 4500;
 
 connectDB();
 app.use(logger());
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -32,12 +32,12 @@ const UserProductRoutes = require("./routes/UserProductRoutes");
 const CommandRoutes = require("./routes/CommandRoutes");
 
 app.use("/api/v1/auth", AuthRoutes);
-app.use("/api/v1/users",verifyJWT, UserRoutes);
-app.use("/api/v1/products",verifyJWT, ProductRoutes);
-app.use("/api/v1/sensors",verifyJWT, SensorRoutes);
-app.use("/api/v1/user/product",verifyJWT, UserProductRoutes);
-app.use("/api/v1/data",verifyJWT, ProductDataRoutes);
-app.use("/api/v1/command",verifyJWT, CommandRoutes);
+app.use("/api/v1/users", verifyJWT, UserRoutes);
+app.use("/api/v1/products", verifyJWT, ProductRoutes);
+app.use("/api/v1/sensors", verifyJWT, SensorRoutes);
+app.use("/api/v1/user/product", verifyJWT, UserProductRoutes);
+app.use("/api/v1/data", verifyJWT, ProductDataRoutes);
+app.use("/api/v1/command", verifyJWT, CommandRoutes);
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));
 
 mongoose.connection.once("open", () => {
