@@ -28,7 +28,7 @@ const getUserProductByUid = async (req, res) => {
 
 const createUserProduct = async (req, res) => {
   try {
-    const { userId, productId, uid, alias, location, sensors, property } =
+    const { userId, productId, uid, alias, location, sensors, controls } =
       req.body;
     const existingUserProduct = await UserProduct.findOne({ uid }).exec();
     if (existingUserProduct) {
