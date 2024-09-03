@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-//const corsOptions = require("./config/corsOptions");
+const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logger");
 const { errorHandler, logError } = require("./middleware/errorHandler");
 const { verifyJWT } = require("./middleware/verifyJWT");
@@ -17,7 +17,7 @@ const port = process.env.PORT || 4500;
 
 connectDB();
 app.use(logger());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
