@@ -30,14 +30,31 @@ const getDataByDate = async (req, res) => {
   }
 };
 
+const getLatestData = async (req, res) => {
+  try {
+    const data = await ProductData.findOne({ uid: req.params.uid })
+      .sort({ timestamp: -1 })
+      .exec();
+    if (!data) {
+      return res.status(404).json({ message: "Data not found" });
+    } else {
+      res.status(200).json(data);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching data." });
+  }
+};
+
 const createData = async (req, res) => {
   try {
-    const userProduct = await UserProduct.findOne({ uid: req.params.uid }).exec();
+    const userProduct = await UserProduct.findOne({
+      uid: req.params.uid,
+    }).exec();
     if (!userProduct) {
       return res.status(404).json({ message: "UserProduct not found." });
     }
     const newData = new ProductData({
-      data:req.body,
+      data: req.body,
       uid: req.params.uid,
     });
     await newData.save();
@@ -53,4 +70,5 @@ module.exports = {
   getDataByUid,
   getDataByDate,
   createData,
+  getLatestData,
 };
