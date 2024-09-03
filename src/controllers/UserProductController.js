@@ -52,7 +52,7 @@ const createUserProduct = async (req, res) => {
       alias,
       location,
       sensors: sensorStates,
-      property,
+      controls,
     });
     await newUserProduct.save();
     res.status(201).json({ message: "User product created successfully." });
@@ -67,7 +67,7 @@ const createUserProduct = async (req, res) => {
 const updateUserProduct = async (req, res) => {
   try {
     const { uid } = req.params.uid;
-    const { alias, location, sensors, property } = req.body;
+    const { alias, location, sensors, controls } = req.body;
     const userProduct = await UserProduct.findOne({ uid }).exec();
     if (!userProduct) {
       return res.status(404).json({ message: "User product not found." });
@@ -82,8 +82,8 @@ const updateUserProduct = async (req, res) => {
       }));
       userProduct.sensors = sensorStates;
     }
-    if (property) {
-      userProduct.property = property;
+    if (controls) {
+      userProduct.controls = controls;
     }
     await userProduct.save();
     res.status(200).json({ message: "User product updated successfully." });
