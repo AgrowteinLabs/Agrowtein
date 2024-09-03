@@ -7,8 +7,8 @@ const {
   createData,
 } = require("../controllers/ProductDataController");
 
-router.get("/:productId", getDataByUid);
-router.get("/:productId/date", getDataByDate);
+router.get("/:uid", getDataByUid);
+router.get("/:uid/date", getDataByDate);
 router.post("/:uid", createData);
 
 module.exports = router;
