@@ -11,7 +11,7 @@ const verifyJWT = async (req, res, next) => {
     const token = req.cookies.accessToken;
     if (!token) {
       console.log("User request invalid, no token");
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized, no token" });
     }
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
