@@ -7,10 +7,9 @@ const {
   createData,
   getLatestData,
 } = require("../controllers/ProductDataController");
-const { verifyJWT } = require("../middleware/verifyJWT");
 
-router.get("/:uid", verifyJWT, getDataByUid);
-router.get("/:uid/date", verifyJWT, getDataByDate);
+router.get("/:uid", getDataByUid);
+router.post("/:uid/date", getDataByDate);
 router.post("/:uid", createData);
 router.get("/realtime/:uid", getLatestData);
 

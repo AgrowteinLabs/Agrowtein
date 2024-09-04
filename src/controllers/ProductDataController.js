@@ -19,7 +19,7 @@ const getDataByDate = async (req, res) => {
     const data = await ProductData.find({
       timestamp: { $gte: req.body.startDate, $lte: req.body.endDate },
       uid: req.params.uid,
-    }).exec();
+    }).select("data").exec();
     if (!data || data.length === 0) {
       return res.status(404).json({ message: "Data not found." });
     } else {
