@@ -11,7 +11,8 @@ const corsOptions = {
   }*/,
   optionsSuccessStatus: 200,
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
 };
 
 module.exports = corsOptions;
