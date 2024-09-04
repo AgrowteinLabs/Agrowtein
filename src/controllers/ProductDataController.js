@@ -30,6 +30,7 @@ const getDataByDate = async (req, res) => {
   }
 };
 
+
 const getLatestData = async (req, res) => {
   try {
     const data = await ProductData.findOne({ uid: req.params.uid })
