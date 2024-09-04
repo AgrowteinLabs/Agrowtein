@@ -6,7 +6,7 @@ const productDataSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    timestamp: { type: Date, default: new Date() },
+    timestamp: { type: Date, default: Date.now },
     data: { type: Map, of: mongoose.Schema.Types.Mixed },
   },
   { timestamps: true }
