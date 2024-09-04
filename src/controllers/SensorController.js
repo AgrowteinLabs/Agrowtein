@@ -1,4 +1,5 @@
 const Sensor = require("../models/Sensor");
+const UserProduct = require("../models/UserProduct");
 
 const getSensors = async (req, res) => {
   try {
@@ -9,6 +10,25 @@ const getSensors = async (req, res) => {
       res.status(200).json(sensors);
     }
   } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: "Error fetching sensors data" });
+  }
+};
+
+const getSensorsByuid = async (req, res) => {
+  try {
+    const userProduct = await UserProduct.findOne({
+      uid: req.params.uid,
+    }).exec();
+    if (!userProduct) {
+      return res.status(404).json({ message: "UserProduct not found" });
+    }
+    const sensors = await Sensor.find({
+      _id: { $in: userProduct.sensors.map((s) => s.sensorId) },
+    }).exec();
+    res.status(200).json(sensors);
+  } catch (error) {
+    console.error(error.message);
     res.status(500).json({ message: "Error fetching sensors data" });
   }
 };
@@ -22,6 +42,7 @@ const getSensorById = async (req, res) => {
       res.status(200).json(sensor);
     }
   } catch (error) {
+    console.error(error.message);
     res.status(500).json({ message: "Error fetching sensor data" });
   }
 };
@@ -76,4 +97,5 @@ module.exports = {
   createSensor,
   updateSensor,
   deleteSensor,
+  getSensorsByuid,
 };
