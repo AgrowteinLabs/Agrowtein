@@ -19,12 +19,36 @@ const getDataByDate = async (req, res) => {
     const data = await ProductData.find({
       timestamp: { $gte: req.body.startDate, $lte: req.body.endDate },
       uid: req.params.uid,
-    }).select("data").exec();
+    })
+      .sort({ timestamp: 1 }) 
+      .select("data timestamp")
+      .exec();
+
     if (!data || data.length === 0) {
       return res.status(404).json({ message: "Data not found." });
-    } else {
-      res.status(200).json(data);
     }
+
+    const filterByThirtyMinutes = (data) => {
+      const result = [];
+      let lastTimestamp = null;
+
+      data.forEach((entry) => {
+        if (!lastTimestamp || entry.timestamp - lastTimestamp >= 30 * 60 * 1000) {
+          result.push(entry);
+          lastTimestamp = entry.timestamp;
+        }
+      });
+
+      return result;
+    };
+
+    const filteredData = filterByThirtyMinutes(data);
+
+    if (filteredData.length === 0) {
+      return res.status(404).json({ message: "No data found in 30-minute intervals." });
+    }
+
+    res.status(200).json(filteredData);
   } catch (error) {
     res.status(500).json({ message: "Error fetching data." });
   }
