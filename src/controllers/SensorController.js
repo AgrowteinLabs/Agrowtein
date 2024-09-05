@@ -26,7 +26,14 @@ const getSensorsByuid = async (req, res) => {
     const sensors = await Sensor.find({
       _id: { $in: userProduct.sensors.map((s) => s.sensorId) },
     }).exec();
-    res.status(200).json(sensors);
+    const sensorData = sensors.map((sensor) => {
+      const userProductSensor = userProduct.sensors.find((s) => s.sensorId.toString() === sensor._id.toString());
+      return {
+        ...sensor.toObject(),
+        state: userProductSensor ? userProductSensor.state : null,
+      };
+    });
+    res.status(200).json(sensorData);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: "Error fetching sensors data" });
