@@ -23,10 +23,10 @@ const userProductSchema = new mongoose.Schema(
         state: { type: String, enum: ["ON", "OFF", "ERROR"], default: "OFF" },
       },
     ],
-    controls: {
+    controls: [{
       type: Map,
       of: mongoose.Schema.Types.Mixed,
-    },
+    }],
   },
   { timestamps: true }
 );
