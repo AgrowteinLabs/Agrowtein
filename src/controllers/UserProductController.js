@@ -66,6 +66,7 @@ const createUserProduct = async (req, res) => {
 
 const updateUserProduct = async (req, res) => {
   try {
+    const { uid } = req.params.uid;
     const { alias, location, sensors, controls } = req.body;
     const userProduct = await UserProduct.findOne({uid: req.params.uid }).exec();
     if (!userProduct) {
