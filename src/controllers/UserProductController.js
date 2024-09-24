@@ -66,9 +66,9 @@ const createUserProduct = async (req, res) => {
 
 const updateUserProduct = async (req, res) => {
   try {
-    const uid = req.params.uid;
+    const { uid } = req.params.uid;
     const { alias, location, sensors, controls } = req.body;
-    const userProduct = await UserProduct.findOne({uid: uid }).exec();
+    const userProduct = await UserProduct.findOne({ uid }).exec();
     if (!userProduct) {
       return res.status(404).json({ message: "User product not found." });
     }
