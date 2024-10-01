@@ -23,10 +23,22 @@ const userProductSchema = new mongoose.Schema(
         state: { type: String, enum: ["ON", "OFF", "ERROR"], default: "OFF" },
       },
     ],
-    controls: {
-      type: Map,
-      of: mongoose.Schema.Types.Mixed,
-    },
+    controls: [
+      {
+        type: Map,
+        of: new mongoose.Schema({
+          name: { type: String, required: true },
+          min: { type: Number, required: true },
+          max: { type: Number, required: true },
+          threshhold: { type: Number, required: true },
+          bypass: { type: Boolean, default:false },
+          automate:{
+            type:Boolean,
+            default:0
+          }
+        }),
+      },
+    ],
   },
   { timestamps: true }
 );
