@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const fs = require("fs");
 const https = require("https");
+const UserProduct = require("../models/UserProduct");
 
 const caCert = fs.readFileSync("src/assets/certificates/AmazonRootCA1.pem");
 const agent = new https.Agent({
@@ -20,7 +21,6 @@ const iotdata = new AWS.IotData({
 async function sendCommandToESP32(uid, command) {
   const topic = `esp32/${uid}/sub`;
   const payload = JSON.stringify({ command });
-
   const params = {
     topic: topic,
     payload: payload,
@@ -39,10 +39,10 @@ async function sendCommandToESP32(uid, command) {
   });
 }
 
-const sendCommand = async (req, res) => {
-  const { command, uid } = req.body;
+const setPower = async (req, res) => {
+  const { uid, command } = req.body;
 
-  if (!command || !uid) {
+  if (!uid || !command) {
     return res.status(400).send({ message: "Command and UID are required" });
   }
 
@@ -55,6 +55,60 @@ const sendCommand = async (req, res) => {
   }
 };
 
+const setControls = async (req, res) => {
+  const mode = req.query.mode;
+  const { uid, pin, controlId, value } = req.body;
+  if (!uid || !pin || !controlId || !value) {
+    res.status(400).send({
+      message: "UID, pin, controlId and value are required",
+    });
+  }
+  try {
+    const command = `${pin}_${mode}_${value}`;
+    await sendCommandToESP32(uid, command);
+    const userProduct = await UserProduct.findOne({ uid: uid }).exec();
+    if (!userProduct) {
+      res.status(404).send({ message: "User product not found" });
+    }
+    let message = "";
+    let controlUpdated = false;
+    userProduct.controls.forEach((control) => {
+      if (control[pin] && control[pin].controlId === controlId) {
+        switch (mode) {
+          case "threshhold":
+            control[pin].threshHold = value;
+            message = "Threshhold set successfully";
+            controlUpdated = true;
+            break;
+          case "bypass":
+            control[pin].bypass = value;
+            message = "Control Bypassed Successfully";
+            controlUpdated = true;
+            break;
+          case "automate":
+            control[pin].automate = value;
+            message =
+              "Device control set to " + value === true
+                ? "Automatic"
+                : "Manual";
+            controlUpdated = true;
+            break;
+          default:
+            return res.status(400).send({ message: "Invalid mode" });
+        }
+      }
+    });
+    if (!controlUpdated) {
+      res.status(404).send({ message: "Control not found" });
+    }
+    await userProduct.save();
+    res.status(200).send({ message: message });
+  } catch (error) {
+    console.error("Error setting control:", error);
+    res.status(500).send({ message: "Failed to set control" });
+  }
+};
+
 module.exports = {
-  sendCommand,
+  setPower,
 };

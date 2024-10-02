@@ -27,15 +27,37 @@ const userProductSchema = new mongoose.Schema(
       {
         type: Map,
         of: new mongoose.Schema({
+          controlId: {
+            type: String,
+            required: true,
+            unique: true,
+            minlength: 3,
+            maxlength: 6,
+          },
           name: { type: String, required: true },
           min: { type: Number, required: true },
           max: { type: Number, required: true },
-          threshhold: { type: Number, required: true },
-          bypass: { type: Boolean, default:false },
-          automate:{
-            type:Boolean,
-            default:0
-          }
+          threshHold: {
+            type: Number,
+            required: true,
+            validate: {
+              validator: function (value) {
+                return value <= this.max && value >= this.min;
+              },
+              message: (props) =>
+                `Threshold value (${props.value}) should be between min (${props.instance.min}) and max (${props.instance.max})`,
+            },
+          },
+          bypass: { type: Boolean, default: false },
+          automate: {
+            type: Boolean,
+            default: true,
+          },
+          state: {
+            type: String,
+            enum: ["ON", "OFF", "ERROR"],
+            default: "OFF",
+          },
         }),
       },
     ],
