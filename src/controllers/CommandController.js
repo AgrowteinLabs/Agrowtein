@@ -40,17 +40,43 @@ async function sendCommandToESP32(uid, command) {
 }
 
 const setPower = async (req, res) => {
-  const { uid, command } = req.body;
-
-  if (!uid || !command) {
-    return res.status(400).send({ message: "Command and UID are required" });
+  const { uid, pin, controlId, value } = req.body;
+  if (!uid || !pin || !controlId || !value) {
+    return res
+      .status(400)
+      .send({ message: "uid, pin, controlId and value are required" });
   }
-
   try {
+    const command = `${pin}_${value}`;
     await sendCommandToESP32(uid, command);
+    const userProduct = await UserProduct.findOne({ uid: uid }).exec();
+    if (!userProduct) {
+      res.status(404).send({ message: "User product not found" });
+    }
+    let controlUpdated = false;
+    userProduct.controls.forEach((control) => {
+      if (control[pin] && control[pin].controlId === controlId) {
+        control[pin].state =
+          value === "on" ? "ON" : value === "off" ? "OFF" : control[pin].state;
+        controlUpdated = true;
+      }
+    });
+    if (!controlUpdated) {
+      return res.status(404).send({ message: "Control not found" });
+    }
+    await userProduct.save();
     res.status(200).send({ message: "Command sent successfully" });
   } catch (error) {
     console.error("Error sending command:", error);
+    const userProduct = await UserProduct.findOne({ uid: uid }).exec();
+    if (userProduct) {
+      userProduct.controls.forEach((control) => {
+        if (control[pin] && control[pin].controlId === controlId) {
+          control[pin].state = "ERROR";
+        }
+      });
+      await userProduct.save();
+    }
     res.status(500).send({ message: "Failed to send command" });
   }
 };
@@ -58,9 +84,9 @@ const setPower = async (req, res) => {
 const setControls = async (req, res) => {
   const mode = req.query.mode;
   const { uid, pin, controlId, value } = req.body;
-  if (!uid || !pin || !controlId || !value) {
-    res.status(400).send({
-      message: "UID, pin, controlId and value are required",
+  if (!mode || !uid || !pin || !controlId || !value) {
+    return res.status(400).send({
+      message: "mode, uid, pin, controlId and value are required",
     });
   }
   try {
@@ -68,7 +94,7 @@ const setControls = async (req, res) => {
     await sendCommandToESP32(uid, command);
     const userProduct = await UserProduct.findOne({ uid: uid }).exec();
     if (!userProduct) {
-      res.status(404).send({ message: "User product not found" });
+      return res.status(404).send({ message: "User product not found" });
     }
     let message = "";
     let controlUpdated = false;
@@ -99,7 +125,7 @@ const setControls = async (req, res) => {
       }
     });
     if (!controlUpdated) {
-      res.status(404).send({ message: "Control not found" });
+      return res.status(404).send({ message: "Control not found" });
     }
     await userProduct.save();
     res.status(200).send({ message: message });
@@ -111,4 +137,5 @@ const setControls = async (req, res) => {
 
 module.exports = {
   setPower,
+  setControls,
 };
