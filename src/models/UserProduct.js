@@ -44,8 +44,7 @@ const userProductSchema = new mongoose.Schema(
               validator: function (value) {
                 return value <= this.max && value >= this.min;
               },
-              message: (props) =>
-                `Threshold value (${props.value}) should be between min (${props.instance.min}) and max (${props.instance.max})`,
+              message: "ThreshHold should be within the range",
             },
           },
           bypass: { type: Boolean, default: false },

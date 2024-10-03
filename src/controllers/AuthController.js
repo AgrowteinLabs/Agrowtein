@@ -13,6 +13,7 @@ const Login = async (req, res) => {
     if (!isValid) {
       return res.status(401).json({ message: "Invalid Email or Password" });
     }
+    user.password = undefined;
     const accessToken = jwt.sign(
       {
         userId: user._id,

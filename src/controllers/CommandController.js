@@ -47,17 +47,17 @@ const setPower = async (req, res) => {
       .send({ message: "uid, pin, controlId and value are required" });
   }
   try {
-    const command = `${pin}_${value}`;
-    await sendCommandToESP32(uid, command);
+    const command = `${pin}${value}`;
+    const result = await sendCommandToESP32(uid, command);
     const userProduct = await UserProduct.findOne({ uid: uid }).exec();
     if (!userProduct) {
       res.status(404).send({ message: "User product not found" });
     }
     let controlUpdated = false;
     userProduct.controls.forEach((control) => {
-      if (control[pin] && control[pin].controlId === controlId) {
-        control[pin].state =
-          value === "on" ? "ON" : value === "off" ? "OFF" : control[pin].state;
+      if (control.get(pin) && control.get(pin).controlId === controlId) {
+        control.set(pin).state =
+          value === "on" ? "ON" : value === "off" ? "OFF" : control.get(pin).state;
         controlUpdated = true;
       }
     });
@@ -65,14 +65,14 @@ const setPower = async (req, res) => {
       return res.status(404).send({ message: "Control not found" });
     }
     await userProduct.save();
-    res.status(200).send({ message: "Command sent successfully" });
+    res.status(200).send({ message: "Command sent successfully" },result);
   } catch (error) {
     console.error("Error sending command:", error);
     const userProduct = await UserProduct.findOne({ uid: uid }).exec();
     if (userProduct) {
       userProduct.controls.forEach((control) => {
-        if (control[pin] && control[pin].controlId === controlId) {
-          control[pin].state = "ERROR";
+        if (control.get(pin) && control.get(pin).controlId === controlId) {
+          control.set(pin).state = "ERROR";
         }
       });
       await userProduct.save();
@@ -99,20 +99,20 @@ const setControls = async (req, res) => {
     let message = "";
     let controlUpdated = false;
     userProduct.controls.forEach((control) => {
-      if (control[pin] && control[pin].controlId === controlId) {
+      if (control.get(pin) && control.get(pin).controlId === controlId) {
         switch (mode) {
           case "threshhold":
-            control[pin].threshHold = value;
+            control.set(pin).threshHold = value;
             message = "Threshhold set successfully";
             controlUpdated = true;
             break;
           case "bypass":
-            control[pin].bypass = value;
+            control.set(pin).bypass = value;
             message = "Control Bypassed Successfully";
             controlUpdated = true;
             break;
           case "automate":
-            control[pin].automate = value;
+            control.set(pin).automate = value;
             message =
               "Device control set to " + value === true
                 ? "Automatic"
