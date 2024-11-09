@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  userNewPassword,
+  updateUserPassword,
   deleteUser,
   getUsers,
   getUserById,
@@ -95,7 +95,7 @@ const {
 router.get("/", getUsers);
 router.get("/:userId", getUserById);
 router.post("/", createUser);
-router.post("/:userId/newpassword", userNewPassword);
+router.post("/:userId/newpassword", updateUserPassword);
 router.put("/:userId", updateUser);
 router.delete("/:userId", deleteUser);
 

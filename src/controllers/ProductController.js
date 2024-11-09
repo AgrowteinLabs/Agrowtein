@@ -26,38 +26,10 @@ const getProductById = async (req, res) => {
   }
 };
 
-const getProductBySerial = async (req, res) => {
-  try {
-    const product = await Product.findOne({
-      serialNumber: req.params.serialNumber,
-    }).exec();
-    if (!product) {
-      res.status(404).json({ message: "Product not found." });
-    } else {
-      res.status(200).json(product);
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching product data." });
-  }
-};
-
-const getProductsByUser = async (req, res) => {
-  try {
-    const products = await Product.find({ userId: req.params.userId }).exec();
-    if (!products) {
-      res.status(404).json({ message: "No products found." });
-    } else {
-      res.status(200).json(products);
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching products data." });
-  }
-};
-
 const createProduct = async (req, res) => {
   try {
     const product = await Product.findOne({
-      serialNumber: req.body.serialNumber,
+      modelNumber: req.body.modelNumber,
     }).exec();
     if (!product) {
       const newProduct = new Product(req.body);
@@ -103,8 +75,6 @@ const deleteProduct = async (req, res) => {
 module.exports = {
   getProducts,
   getProductById,
-  getProductsByUser,
-  getProductBySerial,
   createProduct,
   updateProduct,
   deleteProduct,
