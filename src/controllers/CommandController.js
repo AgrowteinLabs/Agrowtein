@@ -51,12 +51,16 @@ const setPower = async (req, res) => {
 
   try {
     const command = `${pin}${value}`;
-    addCommand(uid, command, controlId, value, res);
+    const result = addCommand(uid, command, controlId, value);
     await sendCommandToESP32(uid, command);
+    if (result == -1) {
+      return res.status(500).json({ message: "Failed to send command" });
+    }
+    res.status(200).json({ message: "Command sent successfully" });
   } catch (error) {
     console.error("Error sending command:", error);
     await updateControlState(uid, pin, controlId, "ERROR");
-    res.status(500).send({ message: "Failed to send command" });
+    res.status(500).json({ message: "Failed to send command" });
   }
 };
 
