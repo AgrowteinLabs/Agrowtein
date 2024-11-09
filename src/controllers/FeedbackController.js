@@ -6,6 +6,7 @@ const handleFeedback = async (req, res) => {
   console.log(`Received feedback: ${feedback} for uid: ${uid}\n`);
   const commandDetails = feedbackStore.get(uid);
   if (!commandDetails) {
+    console.log("No command awaiting feedback");
     return res.status(400).send({ message: "No command awaiting feedback" });
   }
 
@@ -18,6 +19,7 @@ const handleFeedback = async (req, res) => {
       controlId,
       value == "on" ? "ON" : value == "off" ? "OFF" : "ERROR"
     );
+    completeCommand(uid, feedback);
   } else {
     await updateControlState(uid, pin, controlId, "ERROR");
     completeCommand(uid, "ERROR");
