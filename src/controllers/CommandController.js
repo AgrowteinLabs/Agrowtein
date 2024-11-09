@@ -51,7 +51,7 @@ const setPower = async (req, res) => {
 
   try {
     const command = `${pin}${value}`;
-    addCommand(uid, command, res);
+    addCommand(uid, command, controlId, value, res);
     await sendCommandToESP32(uid, command);
   } catch (error) {
     console.error("Error sending command:", error);

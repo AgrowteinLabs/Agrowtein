@@ -1,7 +1,14 @@
-// feedbackStore.js
 const feedbackStore = new Map();
 
-function addCommand(uid, command, res, timeoutDuration = 5000) {
+function addCommand(
+  uid,
+  command,
+  pin,
+  controlId,
+  value,
+  res,
+  timeoutDuration = 5000
+) {
   const timeout = setTimeout(() => {
     if (feedbackStore.has(uid)) {
       const { res } = feedbackStore.get(uid);
@@ -10,15 +17,13 @@ function addCommand(uid, command, res, timeoutDuration = 5000) {
     }
   }, timeoutDuration);
 
-  feedbackStore.set(uid, { command, res, timeout });
+  feedbackStore.set(uid, { command, pin, controlId, value, res, timeout });
 }
 
 function completeCommand(uid, feedback) {
   if (feedbackStore.has(uid)) {
     const { command, res, timeout } = feedbackStore.get(uid);
-
-    // Check if feedback matches the command (e.g., "p1on" => "p1onc")
-    if (feedback === `${command}c`) {
+    if (feedback === command) {
       clearTimeout(timeout);
       res.status(200).json({ message: "Command sent successfully" });
       feedbackStore.delete(uid);
@@ -30,4 +35,4 @@ function removeCommand(uid) {
   feedbackStore.delete(uid);
 }
 
-module.exports = { addCommand, completeCommand, removeCommand };
+module.exports = { addCommand, completeCommand, removeCommand, feedbackStore };
