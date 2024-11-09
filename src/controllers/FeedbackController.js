@@ -27,7 +27,7 @@ const handleFeedback = async (req, res) => {
   res.status(200).json({ message: "Feedback processed" });
 };
 
-async function updateControlState(uid, pin, controlId, newState) {
+const updateControlState = async(uid, pin, controlId, newState) =>{
   const userProduct = await UserProduct.findOne({ uid: uid }).exec();
   if (userProduct) {
     const control = userProduct.controls.find(
@@ -40,4 +40,4 @@ async function updateControlState(uid, pin, controlId, newState) {
   }
 }
 
-module.exports = handleFeedback;
+module.exports = { handleFeedback, updateControlState };

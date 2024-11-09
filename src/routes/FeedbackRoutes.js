@@ -1,5 +1,5 @@
 const express = require("express");
-const handleFeedback = require("../controllers/FeedbackController");
+const {handleFeedback} = require("../controllers/FeedbackController");
 
 const router = express.Router();
 

@@ -1,3 +1,5 @@
+const { updateControlState } = require("../controllers/FeedbackController");
+
 const feedbackStore = new Map();
 
 function addCommand(
@@ -12,8 +14,11 @@ function addCommand(
   const timeout = setTimeout(() => {
     if (feedbackStore.has(uid)) {
       feedbackStore.delete(uid);
-      return -1;
+      updateControlState(uid, pin, controlId, "ERROR");
+      res.status(408).send({ message: "Failed to send command." });
     }
+    else
+    res.status(200).json({ message: "Command sent successfully" });
   }, timeoutDuration);
   feedbackStore.set(uid, { command, pin, controlId, value, res, timeout });
 }
