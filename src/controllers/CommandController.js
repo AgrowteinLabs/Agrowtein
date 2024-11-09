@@ -2,6 +2,8 @@ const AWS = require("aws-sdk");
 const fs = require("fs");
 const https = require("https");
 const UserProduct = require("../models/UserProduct");
+const { addCommand } = require("../utils/FeedbackStore");
+//const { sendCommandToESP32 } = require("../utils/AWSConfig");
 
 const caCert = fs.readFileSync("src/assets/certificates/AmazonRootCA1.pem");
 const agent = new https.Agent({
@@ -46,40 +48,30 @@ const setPower = async (req, res) => {
       .status(400)
       .send({ message: "uid, pin, controlId and value are required" });
   }
+
   try {
     const command = `${pin}${value}`;
-    const result = await sendCommandToESP32(uid, command);
-    const userProduct = await UserProduct.findOne({ uid: uid }).exec();
-    if (!userProduct) {
-      res.status(404).send({ message: "User product not found" });
-    }
-    let controlUpdated = false;
-    userProduct.controls.forEach((control) => {
-      if (control.get(pin) && control.get(pin).controlId === controlId) {
-        control.set(pin).state =
-          value === "on" ? "ON" : value === "off" ? "OFF" : control.get(pin).state;
-        controlUpdated = true;
-      }
-    });
-    if (!controlUpdated) {
-      return res.status(404).send({ message: "Control not found" });
-    }
-    await userProduct.save();
-    res.status(200).send({ message: "Command sent successfully" },result);
+    addCommand(uid, command, res);
+    await sendCommandToESP32(uid, command);
   } catch (error) {
     console.error("Error sending command:", error);
-    const userProduct = await UserProduct.findOne({ uid: uid }).exec();
-    if (userProduct) {
-      userProduct.controls.forEach((control) => {
-        if (control.get(pin) && control.get(pin).controlId === controlId) {
-          control.set(pin).state = "ERROR";
-        }
-      });
-      await userProduct.save();
-    }
+    await updateControlState(uid, pin, controlId, "ERROR");
     res.status(500).send({ message: "Failed to send command" });
   }
 };
+
+async function updateControlState(uid, pin, controlId, newState) {
+  const userProduct = await UserProduct.findOne({ uid: uid }).exec();
+  if (userProduct) {
+    const control = userProduct.controls.find(
+      (ctrl) => ctrl.pin === pin && ctrl.controlId === controlId
+    );
+    if (control) {
+      control.state = newState;
+      await userProduct.save();
+    }
+  }
+}
 
 const setControls = async (req, res) => {
   const mode = req.query.mode;

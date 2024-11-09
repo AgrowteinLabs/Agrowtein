@@ -25,39 +25,40 @@ const userProductSchema = new mongoose.Schema(
     ],
     controls: [
       {
-        type: Map,
-        of: new mongoose.Schema({
-          controlId: {
-            type: String,
-            required: true,
-            unique: true,
-            minlength: 3,
-            maxlength: 6,
-          },
-          name: { type: String, required: true },
-          min: { type: Number, required: true },
-          max: { type: Number, required: true },
-          threshHold: {
-            type: Number,
-            required: true,
-            validate: {
-              validator: function (value) {
-                return value <= this.max && value >= this.min;
-              },
-              message: "ThreshHold should be within the range",
+        pin: {
+          type: String,
+          required: true,
+        },
+        controlId: {
+          type: String,
+          required: true,
+          unique: true,
+          minlength: 3,
+          maxlength: 6,
+        },
+        name: { type: String, required: true },
+        min: { type: Number, required: true },
+        max: { type: Number, required: true },
+        threshHold: {
+          type: Number,
+          required: true,
+          validate: {
+            validator: function (value) {
+              return value <= this.max && value >= this.min;
             },
+            message: "ThreshHold should be within the range",
           },
-          bypass: { type: Boolean, default: false },
-          automate: {
-            type: Boolean,
-            default: true,
-          },
-          state: {
-            type: String,
-            enum: ["ON", "OFF", "ERROR"],
-            default: "OFF",
-          },
-        }),
+        },
+        bypass: { type: Boolean, default: false },
+        automate: {
+          type: Boolean,
+          default: true,
+        },
+        state: {
+          type: String,
+          enum: ["ON", "OFF", "ERROR"],
+          default: "OFF",
+        },
       },
     ],
   },
