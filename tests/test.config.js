@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config({ path: "./config/.env" });
 
 const configureTest = () => {
+
   beforeAll(async () => {
     await mongoose
       .connect(process.env.MONGODB_URI)
