@@ -1,12 +1,13 @@
 #!/bin/bash
+# stop_server.sh
+# Kills any running Node.js processes
 
-# Find the process running on the port  and kill it
-# Adjust the port to the one your app runs on
+echo "Stopping any existing Node.js processes..."
 
-PID=$(lsof -ti:4500)
-if [ -n "$PID" ]; then
-  kill -9 $PID
-  echo "Stopped server running on port 4500"
+if pgrep node > /dev/null
+then
+    pkill node
+    echo "Node.js processes stopped successfully."
 else
-  echo "No server running on port 4500"
+    echo "No Node.js process was running."
 fi
