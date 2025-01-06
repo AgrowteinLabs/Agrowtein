@@ -66,13 +66,20 @@ const createUserProduct = async (req, res) => {
 
 const updateUserProduct = async (req, res) => {
   try {
-    const { alias, location, sensors, controls } = req.body;
-    const userProduct = await UserProduct.findOne({uid: req.params.uid }).exec();
+    const { productId, alias, location, sensors, controls } = req.body;
+    const userProduct = await UserProduct.findOne({ uid: req.params.uid }).exec();
     if (!userProduct) {
       return res.status(404).json({ message: "User product not found." });
     }
-    if (location) userProduct.location = location;
-    if (alias) userProduct.alias = alias;
+    if (productId) {
+      userProduct.productId = productId;
+    }
+    if (location) {
+      userProduct.location = location;
+    }
+    if (alias) {
+      userProduct.alias = alias;
+    }
     if (sensors) {
       const sensorObjects = await Sensor.find({ _id: { $in: sensors } }).exec();
       const sensorStates = sensorObjects.map((sensor) => ({
@@ -87,9 +94,11 @@ const updateUserProduct = async (req, res) => {
     await userProduct.save();
     res.status(200).json({ message: "User product updated successfully." });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Error updating user product." });
   }
 };
+
 
 const deleteUserProduct = async (req, res) => {
   try {
