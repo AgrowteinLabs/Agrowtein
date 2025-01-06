@@ -46,10 +46,13 @@ jobs:
       - name: Zip source code
         run: zip -r agrowtein.zip .
 
+      - name: Debug AWS Identity
+        run: aws sts get-caller-identity
+
       # Upload to S3
       - name: Upload to S3
-        run: aws s3 cp agrowtein.zip s3://agrowtein-deployment-bucket/agrowtein.zip
-
+        run: |
+          aws s3 cp agrowtein.zip s3://agrowtein-deployment-bucket/agrowtein.zip --region ap-south-1
       # Deploy using CodeDeploy
       - name: CodeDeploy
         run: |
