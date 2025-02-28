@@ -96,14 +96,14 @@ const setControls = async (req, res) => {
     );
     if (control) {
       switch (mode) {
-        case "threshhold":
+        case "threshold":
           control.threshHold = value;
           payload = {
-            command: "threshhold",
+            command: "threshold",
             pin: pin,
             threshold: value,
           };
-          message = "Threshhold set successfully";
+          message = "Threshold set successfully";
           break;
         case "bypass":
           control.bypass = value;
