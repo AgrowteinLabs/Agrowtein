@@ -1,4 +1,4 @@
-const AWS = require("aws-sdk");
+/* const AWS = require("aws-sdk");
 const mqtt = require("mqtt");
 const fs = require("fs");
 const https = require("https");
@@ -34,8 +34,8 @@ const mqttClient = mqtt.connect({
 
 // Function to send a command to an ESP32 and wait for feedback
 async function sendCommandToESP32(uid, command) {
-  const commandTopic = `esp32/avi001/sub`;
-  const feedbackTopic = `esp32/pub`;
+  const commandTopic = `esp32/${uid}/sub`;
+  const feedbackTopic = `esp32/feedback/pub`;
   const payload = JSON.stringify({ command });
   const params = {
     topic: commandTopic,
@@ -110,3 +110,4 @@ async function sendCommandToESP32(uid, command) {
 }
 
 module.exports = { sendCommandToESP32 };
+ */
