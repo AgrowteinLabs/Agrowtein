@@ -57,7 +57,7 @@ describe("POST /api/v1/users/newpassword", () => {
       .send({
         password: "test@12345",
       });
-    expect(res.statusCode).toBe(201);
+    expect(res.statusCode).toBe(200);
     expect(res.body.message).toBe("Password changed successfully.");
   });
 });
