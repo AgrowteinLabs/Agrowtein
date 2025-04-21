@@ -145,10 +145,63 @@ const getSensorStatus = async (req, res) => {
   }
 };
 
+const getIntervalData = async (req, res) => {
+  try {
+    const { uid } = req.params;
+    const { startDate, endDate, interval = 30 } = req.query;
+
+    const intervalMs = parseInt(interval) * 60 * 1000;
+
+    const data = await ProductData.aggregate([
+      {
+        $match: {
+          uid,
+          timestamp: {
+            $gte: new Date(startDate),
+            $lte: new Date(endDate),
+          },
+        },
+      },
+      {
+        $sort: { timestamp: 1 },
+      },
+      {
+        $group: {
+          _id: {
+            $toLong: {
+              $subtract: [
+                { $toLong: "$timestamp" },
+                { $mod: [{ $toLong: "$timestamp" }, intervalMs] }
+              ]
+            }
+          },
+          data: { $first: "$data" },
+          timestamp: { $first: "$timestamp" }
+        }
+      },
+      {
+        $sort: { timestamp: 1 },
+      },
+    ]);
+
+    if (!data || data.length === 0) {
+      return res.status(404).json({ message: "No data found in given interval." });
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error("Interval Fetch Error:", error);
+    res.status(500).json({ message: "Server error fetching interval data." });
+  }
+};
+
+
 module.exports = {
   getDataByUid,
   getDataByDate,
   createData,
   getLatestData,
-  getSensorStatus, 
+  getSensorStatus,
+  getIntervalData,
+
 };
