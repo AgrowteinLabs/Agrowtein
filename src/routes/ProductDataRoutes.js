@@ -15,7 +15,7 @@ router.post("/:uid/date", getDataByDate);
 router.post("/:uid", createData);
 router.get("/realtime/:uid", getLatestData);
 router.get("/status/:uid", getSensorStatus);
-router.get('/data/:uid/date-interval', getIntervalData);
+router.get('/:uid/date-interval', getIntervalData);
 
 
 module.exports = router;
