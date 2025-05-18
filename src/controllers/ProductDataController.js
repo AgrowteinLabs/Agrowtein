@@ -162,9 +162,7 @@ const getIntervalData = async (req, res) => {
           },
         },
       },
-      {
-        $sort: { timestamp: 1 },
-      },
+      { $sort: { timestamp: 1 } },
       {
         $group: {
           _id: {
@@ -179,9 +177,8 @@ const getIntervalData = async (req, res) => {
           timestamp: { $first: "$timestamp" }
         }
       },
-      {
-        $sort: { timestamp: 1 },
-      },
+      { $sort: { timestamp: 1 } },
+      { $project: { _id: 0, data: 1, timestamp: 1 } } // <-- Exclude _id, include data and timestamp
     ]);
 
     if (!data || data.length === 0) {
