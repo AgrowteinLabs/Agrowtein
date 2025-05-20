@@ -31,8 +31,12 @@ const ProductDataRoutes = require("./routes/ProductDataRoutes");
 const UserProductRoutes = require("./routes/UserProductRoutes");
 const CommandRoutes = require("./routes/CommandRoutes");
 const FeedbackRoutes = require("./routes/FeedbackRoutes");
+<<<<<<< Updated upstream
 const mqttRoute = require("./routes/mqtt.route");
 
+=======
+const AIBotRoutes = require("./routes/AIBotRoutes")
+>>>>>>> Stashed changes
 
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/users", UserRoutes);
@@ -42,6 +46,7 @@ app.use("/api/v1/user/product", UserProductRoutes);
 app.use("/api/v1/data", ProductDataRoutes);
 app.use("/api/v1/command", CommandRoutes);
 app.use("/api/v1/feedback", FeedbackRoutes);
+app.use("/api/v1/bot", AIBotRoutes);
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api", mqttRoute);
 
