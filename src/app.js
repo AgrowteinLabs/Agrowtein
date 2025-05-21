@@ -31,12 +31,9 @@ const ProductDataRoutes = require("./routes/ProductDataRoutes");
 const UserProductRoutes = require("./routes/UserProductRoutes");
 const CommandRoutes = require("./routes/CommandRoutes");
 const FeedbackRoutes = require("./routes/FeedbackRoutes");
-<<<<<<< Updated upstream
+const AIBotRoutes = require("./routes/AIBotRoutes");
 const mqttRoute = require("./routes/mqtt.route");
 
-=======
-const AIBotRoutes = require("./routes/AIBotRoutes")
->>>>>>> Stashed changes
 
 app.use("/api/v1/auth", AuthRoutes);
 app.use("/api/v1/users", UserRoutes);
