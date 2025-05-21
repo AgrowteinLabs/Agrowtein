@@ -59,6 +59,7 @@ const GeneralBot = async (req, res) => {
 
     return res.status(200).json({
       answer: lastMessage,
+      session_id : thread_id,
     });
 
   } catch (error) {
@@ -179,7 +180,6 @@ const CreateReport = async (req, res) => {
     // 12. Return the final report
     return res.status(200).json({
       report: lastMessage,
-      session_id: thread_id,
     });
 
   } catch (error) {
