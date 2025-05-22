@@ -21,6 +21,10 @@ const userProductSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    description: {
+      type: String,
+      default: null,
+    },
     sensors: [
       {
         sensorId: { type: mongoose.Schema.Types.ObjectId, ref: "Sensor" },

@@ -145,8 +145,7 @@ const CreateReport = async (req, res) => {
     }
 
     // 6. Fetch farm description from Product schema
-    const productInfo = await Product.findById(farmDoc.productId);
-    const description = productInfo?.description || "No description available.";
+    const description = farmDoc?.description || "No description available.";
 
     // 7. Construct payload to send to assistant
     const reportRequest = {
