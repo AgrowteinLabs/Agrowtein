@@ -175,29 +175,12 @@ const CreateReport = async (req, res) => {
 
     // 11. Fetch the assistant's message
     const messages = await openai.beta.threads.messages.list(thread_id);
-    let latest = messages.data[0]?.content[0]?.text?.value || "";
-    console.log("Latest  Responce:",latest )
+    const lastMessage = messages.data[0]?.content[0]?.text?.value || "No report generated.";
 
-    // 11. Clean markdown and parse JSON
-    const cleanedJson = latest
-      .replace(/^```json/, "")
-      .replace(/^```/, "")
-      .replace(/```$/, "")
-      .trim();
-
-    let parsedReport;
-    try {
-      parsedReport = JSON.parse(cleanedJson);
-    } catch (err) {
-      console.error("❌ JSON Parse Error:", err);
-      return res.status(500).json({
-        message: "Assistant did not return valid JSON.",
-        raw: latest
-      });
-    }
-
-    // 12. Send structured JSON report
-    return res.status(200).json(parsedReport);
+    // 12. Return the final report
+    return res.status(200).json({
+      report: lastMessage,
+    });
 
   } catch (error) {
     console.error("❌ Error in CreateReport:", error);
