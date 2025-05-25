@@ -143,11 +143,10 @@ const CreateReport = async (req, res) => {
     if (!data || data.length === 0) {
       return res.status(404).json({ message: "No data found for past 7 days." });
     }
-    console.log("Data recieved", data);
+
     // 6. Fetch farm description from Product schema
     const description = farmDoc?.description || "No description available.";
-    const test1 = JSON.stringify(data)
-    console.log("Test:", test1)
+
     // 7. Construct payload to send to assistant
     const reportRequest = {
       description,
@@ -157,7 +156,7 @@ const CreateReport = async (req, res) => {
     // 8. Post message to the thread
     await openai.beta.threads.messages.create(thread_id, {
       role: "user",
-      content: `Please analyze the following farm data and generate a report:\n\n${JSON.stringify(reportRequest)}`
+      content: "Please analyze the following farm data and generate a report:\n\n${JSON.stringify(reportRequest)}",
     });
 
     // 9. Run assistant on the thread
