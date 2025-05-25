@@ -162,6 +162,31 @@ const CreateReport = async (req, res) => {
     // 9. Run assistant on the thread
     const run = await openai.beta.threads.runs.create(thread_id, {
       assistant_id: UserAssistantID,
+      text: {
+        format: {
+          type: "json_schema",
+          name: "farm_report",
+          strict: true,
+          schema: {
+            type: "object",
+            properties: {
+              prediction: { type: "string" },
+              recommendations: { type: "string" },
+              drawbacks: { type: "string" },
+              trend_summary: { type: "string" },
+              success_percentage: { type: "string" },
+            },
+            required: [
+              "prediction",
+              "recommendations",
+              "drawbacks",
+              "trend_summary",
+              "success_percentage",
+            ],
+            additionalProperties: false,
+          },
+        },
+      },
     });
 
     // 10. Poll until run completes
@@ -174,12 +199,17 @@ const CreateReport = async (req, res) => {
 
     // 11. Fetch the assistant's message
     const messages = await openai.beta.threads.messages.list(thread_id);
-    const lastMessage = messages.data[0]?.content[0]?.text?.value || "No report generated.";
+    const content = messages.data[0]?.content?.[0];
 
     // 12. Return the final report
-    return res.status(200).json({
-      report: lastMessage,
-    });
+    if (content?.type === "output_text") {
+      const report = JSON.parse(content.text);
+      return res.status(200).json({ report });
+    } else if (content?.type === "refusal") {
+      return res.status(400).json({ message: "Model refused to generate a report." });
+    } else {
+      return res.status(400).json({ message: "Unexpected response from model." });
+    }
 
   } catch (error) {
     console.error("❌ Error in CreateReport:", error);
