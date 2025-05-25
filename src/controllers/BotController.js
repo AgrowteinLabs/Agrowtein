@@ -143,10 +143,11 @@ const CreateReport = async (req, res) => {
     if (!data || data.length === 0) {
       return res.status(404).json({ message: "No data found for past 7 days." });
     }
-
+    console.log("Data recieved", data);
     // 6. Fetch farm description from Product schema
     const description = farmDoc?.description || "No description available.";
-
+    const test1 = JSON.stringify(data)
+    console.log("Test:", test1)
     // 7. Construct payload to send to assistant
     const reportRequest = {
       description,
@@ -175,6 +176,7 @@ const CreateReport = async (req, res) => {
     // 11. Fetch the assistant's message
     const messages = await openai.beta.threads.messages.list(thread_id);
     let latest = messages.data[0]?.content[0]?.text?.value || "";
+    console.log("Latest  Responce:",latest )
 
     // 11. Clean markdown and parse JSON
     const cleanedJson = latest
