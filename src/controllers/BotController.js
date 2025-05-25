@@ -156,7 +156,7 @@ const CreateReport = async (req, res) => {
     // 8. Post message to the thread
     await openai.beta.threads.messages.create(thread_id, {
       role: "user",
-      content: "Please analyze the following farm data and generate a report:\n\n${JSON.stringify(reportRequest)}",
+      content: `Please analyze the following farm data and generate a report:\n\n${JSON.stringify(reportRequest)}`,
     });
 
     // 9. Run assistant on the thread
