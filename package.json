@@ -1,7 +1,7 @@
 {
-  "name": "agrometer",
+  "name": "agrowtein",
   "version": "1.0.0",
-  "description": "Agrometer backend",
+  "description": "Agrowtein backend",
   "main": "app.js",
   "directories": {
     "test": "tests"
