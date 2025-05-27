@@ -17,6 +17,18 @@ const userProductSchema = new mongoose.Schema(
     state: { type: String, enum: ["ON", "OFF", "ERROR"], default: "OFF" },
     location: { type: String },
     installationDate: { type: Date, default: Date.now() },
+    session_id: {
+      type: String,
+      default: null,
+    },
+    type: {
+      type: String,
+      enum: ["Farm", "Other"],
+    },
+    description: {
+      type: String,
+      default: null,
+    },
     sensors: [
       {
         sensorId: { type: mongoose.Schema.Types.ObjectId, ref: "Sensor" },
