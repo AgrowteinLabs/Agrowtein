@@ -21,6 +21,10 @@ const userProductSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    type: {
+      type: String,
+      enum: ["Farm", "Other"],
+    },
     description: {
       type: String,
       default: null,
