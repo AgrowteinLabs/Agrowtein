@@ -79,27 +79,9 @@ const CreateReport = async (req, res) => {
     const farmDoc = await UserProduct.findOne({ uid });
     if (!farmDoc) return res.status(404).json({ message: "Farm not found." });
 
-    let thread_id = farmDoc.session_id;
-
-    // 2. Validate thread or create new one
-    let isValidThread = true;
-    if (thread_id) {
-      try {
-        await openai.beta.threads.retrieve(thread_id);
-      } catch (err) {
-        if (err.status === 404) {
-          isValidThread = false;
-        } else {
-          throw err;
-        }
-      }
-    }
-
-    if (!thread_id || !isValidThread) {
-      const thread = await openai.beta.threads.create();
-      thread_id = thread.id;
-      await UserProduct.updateOne({ uid }, { session_id: thread_id });
-    }
+    const thread = await openai.beta.threads.create();
+    thread_id = thread.id;
+    await UserProduct.updateOne({ uid }, { session_id: thread_id });
 
     // 3. Get 7-day interval timestamps
     const endDate = new Date();
