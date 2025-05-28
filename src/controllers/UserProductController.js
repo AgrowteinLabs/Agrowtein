@@ -66,7 +66,7 @@ const createUserProduct = async (req, res) => {
 
 const updateUserProduct = async (req, res) => {
   try {
-    const { productId, alias, location, sensors, controls } = req.body;
+    const { productId, alias, location, sensors, controls, type } = req.body;
     const userProduct = await UserProduct.findOne({ uid: req.params.uid }).exec();
     if (!userProduct) {
       return res.status(404).json({ message: "User product not found." });
@@ -79,6 +79,9 @@ const updateUserProduct = async (req, res) => {
     }
     if (alias) {
       userProduct.alias = alias;
+    }
+    if (type) {
+      userProduct.type = type;
     }
     if (sensors) {
       const sensorObjects = await Sensor.find({ _id: { $in: sensors } }).exec();
